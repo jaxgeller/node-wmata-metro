@@ -1,10 +1,5 @@
 var request = require('request');
-
 var api = require('./api')
-var coord1 = {
-  latitude: 38.9059581,
-  longitude: -77.0416805
-}
 
 function Metro(apikey) {
   var self = this;
@@ -17,3 +12,5 @@ function Metro(apikey) {
   this.getStationPrediction = api.getStationPrediction;
   this.getClosestStations = api.getClosestStations;
 }
+
+module.exports = Metro;
