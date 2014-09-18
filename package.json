@@ -5,6 +5,7 @@
   "keywords": [],
   "main": "",
   "dependencies": {
+    "lodash": "^2.4.1",
     "request": "^2.44.0"
   },
   "devDependencies": {

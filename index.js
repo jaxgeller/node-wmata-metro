@@ -1,10 +1,13 @@
 var request = require('request');
 var geo = require('node-geo-distance');
+var _ = require('lodash');
+
 // var api = require('./api')
 var coord1 = {
   latitude: 38.9059581,
   longitude: -77.0416805
 }
+
 function Metro(apikey) {
   var self = this;
   
@@ -35,17 +38,14 @@ function Metro(apikey) {
     
     self.get(route, function(err, data) {
       if (err) return done(err);
+      var holder = {};
+      var max = data.Trains.length;
       
       if (opts.sort) {
-        var max = data.length;
-        var holder = {};
-
-        for (var i=0; i<max; i++) {
-          var item = data[i];
-          if (!_.isArray(holder[item.LocationCode])) {
-            holder[item.LocationCode] = [];  
-          }
-          if (item.DestinationCode) {
+        for (var i=0; i< max; i++) {
+          var item = data.Trains[i];
+          if (!_.isArray(holder[item.LocationCode])) holder[item.LocationCode] = [];  
+          if (item.LocationCode) {
             var minSuffix = '';   
             if (opts.suffix) {
               if (typeof parseInt(item.Min) === 'number' && parseInt(item.Min) > 1) minSuffix = ' mins';
@@ -63,8 +63,9 @@ function Metro(apikey) {
             });
           }
         }
+        return done(null, holder);
       }
-      return done(null, data);
+      return done(null, data.Trains);
     });
   }
 
@@ -82,6 +83,6 @@ function Metro(apikey) {
 
 var a = new Metro('kfgpmgvfgacx98de9q3xazww')
 
-a.getClosestStations({lat:0,lon:0},0,0, function(err, res) {
+a.getStationPrediction('A11', {}, function(err, res) {
   console.log(res)
 });
