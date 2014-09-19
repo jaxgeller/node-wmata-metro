@@ -1,9 +1,9 @@
 {
-  "name": "wmata-metro.js",
+  "name": "wmata-metro-js",
   "version": "1.0.0",
-  "description": "",
-  "keywords": [],
-  "main": "",
+  "description": "Metro api for node.js",
+  "keywords": ["wmata", "metro", "metro api", "metro js", "api for metro"],
+  "main": "index.js",
   "dependencies": {
     "lodash": "^2.4.1",
     "request": "^2.44.0"
@@ -15,7 +15,7 @@
   "scripts": {
     "test": "mocha"
   },
-  "author": "",
+  "author": "@JaxGeller",
   "license": "MIT",
   "repository": {
     "type": "git",
