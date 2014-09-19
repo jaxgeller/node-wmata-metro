@@ -1,8 +1,10 @@
 var request = require('request');
 var _ = require('lodash');
 
-var self = this;
-
+function suffix(item) {
+  if (typeof parseInt(item.Min) === 'number' && parseInt(item.Min) > 1) return ' mins';
+  if (typeof parseInt(item.Min) === 'number' && parseInt(item.Min) <= 1) return ' min';
+}
 
 function sortData(data, opts, done) {
   if (!data.length) return done(new Error('No data'));
@@ -16,8 +18,7 @@ function sortData(data, opts, done) {
     if (item.LocationCode) {
       var minSuffix = '';   
       if (opts.suffix) {
-        if (typeof parseInt(item.Min) === 'number' && parseInt(item.Min) > 1) minSuffix = ' mins';
-        if (typeof parseInt(item.Min) === 'number' && parseInt(item.Min) <= 1) minSuffix = ' min';
+        minSuffix = suffix(item);
       }
       holder[item.LocationCode].push({
         car: item.Car,
