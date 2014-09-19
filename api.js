@@ -3,6 +3,7 @@ var _ = require('lodash');
 
 var self = this;
 
+
 function sortData(data, opts, done) {
   if (!data.length) return done(new Error('No data'));
   
@@ -32,10 +33,6 @@ function sortData(data, opts, done) {
   }
   return done(null, holder);
 }
-
-
-
-
 
 
 
@@ -72,7 +69,7 @@ exports.getStationPrediction = function(stations, opts, done) {
 
 
 exports.getClosestStations = function(loc, radius, done) {
-  var route = this.url('rail.svc/json/jStationEntrances?lat=' + loc.lat + '&lon=' + loc.lat + '&radius=' + radius + '&');
+  var route = this.url('rail.svc/json/jStationEntrances?lat=' + loc.lat + '&lon=' + loc.lon + '&radius=' + radius + '&');
   this.get(route, function(err, data) {
     if (err) return done(err);
     return done(null, data.Entrances);
