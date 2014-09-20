@@ -78,3 +78,90 @@ exports.getClosestStations = function(loc, radius, done) {
 }
 
 
+
+
+// http://api.wmata.com/Rail.svc/json/jLines?api_key=n7ch87y8fapve2g8dukccnbv
+exports.getRailLines = function(done) {
+  var route = '/Rail.svc/json/jLines?';
+  get(this.url(route), function(err, data) {
+    if (err) return done(err);
+    return done(null, data);
+  });
+}
+
+// http://api.wmata.com/Rail.svc/json/jStations?LineCode=RD&api_key=n7ch87y8fapve2g8dukccnbv
+exports.getRailStations = function(id, done) {
+  var route = '/Rail.svc/json/jStations?LineCode=RD&';
+  get(this.url(route), function(err, data) {
+    if (err) return done(err);
+    return done(null, data);
+  });
+}
+
+// http://api.wmata.com/Rail.svc/json/jStationInfo?StationCode=A10&api_key=n7ch87y8fapve2g8dukccnbv
+exports.getRailStationInfo = function(id, done) {
+  var route = '/Rail.svc/json/jStationInfo?StationCode=A10&';
+  get(this.url(route), function(err, data) {
+    if (err) return done(err);
+    return done(null, data);
+  });
+}
+
+// http://api.wmata.com/Rail.svc/json/jPath?FromStationCode=A10&ToStationCode=A12&api_key=n7ch87y8fapve2g8dukccnbv
+exports.getRailPaths = function(from, to, done) {
+  var route = '/Rail.svc/json/jPath?FromStationCode=A10&ToStationCode=A12&';
+  get(this.url(route), function(err, data) {
+    if (err) return done(err);
+    return done(null, data);
+  });
+}
+
+// http://api.wmata.com/StationPrediction.svc/json/GetPrediction/A10?api_key=n7ch87y8fapve2g8dukccnbv
+exports.getRailStationPrediction = function(id) {
+  var route = '/StationPrediction.svc/json/GetPrediction/A10?';
+  get(this.url(route), function(err, data) {
+    if (err) return done(err);
+    return done(null, data);
+  });
+}
+
+// http://api.wmata.com/rail.svc/json/jStationEntrances?lat=38.9059581&lon=-77.0416805&radius=300&api_key=n7ch87y8fapve2g8dukccnbv
+exports.getRailStationEntrances = function(loc, radius, done) {
+  var route = '/rail.svc/json/jStationEntrances?lat=38.9059581&lon=-77.0416805&radius=300&';
+  get(this.url(route), function(err, data) {
+    if (err) return done(err);
+    return done(null, data);
+  });
+}
+
+// http://api.wmata.com/rail.svc/json/jStationParking?StationCode=F06&api_key=n7ch87y8fapve2g8dukccnbv
+exports.getRailStationParking = function(id, done) {
+  var route = '/rail.svc/json/jStationParking?StationCode=F06&';
+  get(this.url(route), function(err, data) {
+    if (err) return done(err);
+    return done(null, data);
+  });
+}
+
+// http://api.wmata.com/rail.svc/json/jStationTimes?StationCode=A10&api_key=n7ch87y8fapve2g8dukccnbv
+exports.getRailStationTimes = function(id, done) {
+  var route = '/rail.svc/json/jStationTimes?StationCode=A10&';
+  get(this.url(route), function(err, data) {
+    if (err) return done(err);
+    return done(null, data);
+  });
+}
+
+// http://api.wmata.com/rail.svc/json/JSrcStationToDstStationInfo?FromStationCode=A10&ToStationCode=B05&api_key=n7ch87y8fapve2g8dukccnbv
+exports.getRailStationToStationInfo = function(from, to, done) {
+  var route = '/rail.svc/json/JSrcStationToDstStationInfo?FromStationCode=A10&ToStationCode=B05&';
+  get(this.url(route), function(err, data) {
+    if (err) return done(err);
+    return done(null, data);
+  });
+}
+
+
+
+
+

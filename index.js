@@ -1,12 +1,10 @@
-var request = require('request');
 var api = require('./api')
 
 function Metro(apikey) {
-  var self = this;
   this.key = 'api_key=' + apikey;
   this.baseUrl = 'http://api.wmata.com/'
   this.url = function(type) {
-    return self.baseUrl + type + self.key;
+    return this.baseUrl + type + this.key;
   }
   this.get = api.get;
   this.getStationPrediction = api.getStationPrediction;
