@@ -9,14 +9,15 @@ function suffix(item) {
 
 function assembleData(item) {
   return {
-    car: item.Car,
-    group: item.Group,
-    min: item.Min + suffix(item),
-    destName: item.DestinationName,
-    destCode: item.DestinationCode,
-    locName: item.LocationName,
-    locCode: item.LocationCode,
-    line: item.Line
+    Car: item.Car,
+    Destination: item.Destination,
+    DestinationCode: item.DestinationCode,
+    DestinationName: item.DestinationName,
+    Group: item.Group,
+    Line: item.Line,
+    LocationCode: item.LocationCode,
+    LocationName: item.LocationName,
+    Min: item.Min + suffix(item)
   }
 }
 

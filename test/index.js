@@ -29,7 +29,7 @@ describe('Metro api', function() {
     });
   }); 
 
-  it('.getRailStationInfo should', function(done) {
+  it('.getRailStationInfo', function(done) {
     client.getRailStationInfo('A10', function(err, res) {
       if (err) return done(err);
       res.should.be.an.object;
@@ -38,7 +38,7 @@ describe('Metro api', function() {
     });
   });
   
-  it('.getRailPaths should', function(done) {
+  it('.getRailPaths', function(done) {
     client.getRailPaths('A10','A12', function(err, res) {
       if (err) return done(err);
       res.should.be.an.array;
@@ -47,7 +47,7 @@ describe('Metro api', function() {
     });
   });
 
-  it('.getRailStationPrediction should', function(done) {
+  it('.getRailStationPrediction', function(done) {
     client.getRailStationPrediction('A10', false, function(err, res) {
       if (err) return done(err);
       res.should.be.an.array;
@@ -56,12 +56,10 @@ describe('Metro api', function() {
     });
   });
   
-  it('.getRailStationPrediction should', function(done) {
+  it('.getRailStationPrediction #sort', function(done) {
     client.getRailStationPrediction('A10', true, function(err, res) {
       if (err) return done(err);
-      res.should.be.an.object;
-      // res.A10[0].should.be.an.array;
-      // res.A10[0].should.have.keys('Car', 'Destination', 'DestinationCode', 'DestinationName', 'Group', 'Line', 'LocationCode', 'LocationName', 'Min');
+      res.A10[0].should.have.keys('Car', 'Destination', 'DestinationCode', 'DestinationName', 'Group', 'Line', 'LocationCode', 'LocationName', 'Min');
       return done();
     });
   });
