@@ -37,7 +37,7 @@ function sortData(data, opts, done) {
 
 
 
-exports.get = function(url, done) {
+function get(url, done) {
   request(url, function(err, res, body) {
     if (err) return done(err);
     if (res.statusCode !== 200) return done(new Error('Returned: ' + res.statusCode));
@@ -69,95 +69,107 @@ exports.getStationPrediction = function(stations, opts, done) {
 }
 
 
-exports.getClosestStations = function(loc, radius, done) {
-  var route = this.url('rail.svc/json/jStationEntrances?lat=' + loc.lat + '&lon=' + loc.lon + '&radius=' + radius + '&');
-  this.get(route, function(err, data) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+exports.getRailLines = function(done) {
+  var route = '/Rail.svc/json/jLines?';
+  get(this.url(route), function(err, data) {
     if (err) return done(err);
+    if (!data.Lines) return done(new Error('no data'));
+    return done(null, data.Lines);
+  });
+}
+
+
+exports.getRailStations = function(id, done) {
+  var route = '/Rail.svc/json/jStations?LineCode='+id+'&';
+  get(this.url(route), function(err, data) {
+    if (err) return done(err);
+    if (!data.Stations) return done(new Error('no data'));
+    return done(null, data.Stations);
+  });
+}
+
+
+exports.getRailStationInfo = function(id, done) {
+  var route = '/Rail.svc/json/jStationInfo?StationCode='+id+'&';
+  get(this.url(route), function(err, data) {
+    if (err) return done(err);
+    if (!data) return done(new Error('no data'));
+    return done(null, data);
+  });
+}
+
+
+exports.getRailPaths = function(from, to, done) {
+  var route = '/Rail.svc/json/jPath?FromStationCode='+from+'&ToStationCode='+to+'&';
+  get(this.url(route), function(err, data) {
+    if (err) return done(err);
+    if (!data.Path) return done(new Error('no data'));
+    return done(null, data.Path);
+  });
+}
+
+
+exports.getRailStationPrediction = function(id, done) {
+  var route = '/StationPrediction.svc/json/GetPrediction/'+id+'?';
+  get(this.url(route), function(err, data) {
+    if (err) return done(err);
+    if (!data.Trains) return done(new Error('no data'));
+    return done(null, data.Trains);
+  });
+}
+
+
+exports.getRailStationEntrances = function(loc, radius, done) {
+  var route = '/rail.svc/json/jStationEntrances?lat='+loc.lat+'&lon='+loc.lon+'&radius='+radius+'&';
+  get(this.url(route), function(err, data) {
+    if (err) return done(err);
+    if (!data.Entrances) return done(new Error('no data'));
     return done(null, data.Entrances);
   });
 }
 
 
-
-
-// http://api.wmata.com/Rail.svc/json/jLines?api_key=n7ch87y8fapve2g8dukccnbv
-exports.getRailLines = function(done) {
-  var route = '/Rail.svc/json/jLines?';
-  get(this.url(route), function(err, data) {
-    if (err) return done(err);
-    return done(null, data);
-  });
-}
-
-// http://api.wmata.com/Rail.svc/json/jStations?LineCode=RD&api_key=n7ch87y8fapve2g8dukccnbv
-exports.getRailStations = function(id, done) {
-  var route = '/Rail.svc/json/jStations?LineCode=RD&';
-  get(this.url(route), function(err, data) {
-    if (err) return done(err);
-    return done(null, data);
-  });
-}
-
-// http://api.wmata.com/Rail.svc/json/jStationInfo?StationCode=A10&api_key=n7ch87y8fapve2g8dukccnbv
-exports.getRailStationInfo = function(id, done) {
-  var route = '/Rail.svc/json/jStationInfo?StationCode=A10&';
-  get(this.url(route), function(err, data) {
-    if (err) return done(err);
-    return done(null, data);
-  });
-}
-
-// http://api.wmata.com/Rail.svc/json/jPath?FromStationCode=A10&ToStationCode=A12&api_key=n7ch87y8fapve2g8dukccnbv
-exports.getRailPaths = function(from, to, done) {
-  var route = '/Rail.svc/json/jPath?FromStationCode=A10&ToStationCode=A12&';
-  get(this.url(route), function(err, data) {
-    if (err) return done(err);
-    return done(null, data);
-  });
-}
-
-// http://api.wmata.com/StationPrediction.svc/json/GetPrediction/A10?api_key=n7ch87y8fapve2g8dukccnbv
-exports.getRailStationPrediction = function(id) {
-  var route = '/StationPrediction.svc/json/GetPrediction/A10?';
-  get(this.url(route), function(err, data) {
-    if (err) return done(err);
-    return done(null, data);
-  });
-}
-
-// http://api.wmata.com/rail.svc/json/jStationEntrances?lat=38.9059581&lon=-77.0416805&radius=300&api_key=n7ch87y8fapve2g8dukccnbv
-exports.getRailStationEntrances = function(loc, radius, done) {
-  var route = '/rail.svc/json/jStationEntrances?lat=38.9059581&lon=-77.0416805&radius=300&';
-  get(this.url(route), function(err, data) {
-    if (err) return done(err);
-    return done(null, data);
-  });
-}
-
-// http://api.wmata.com/rail.svc/json/jStationParking?StationCode=F06&api_key=n7ch87y8fapve2g8dukccnbv
 exports.getRailStationParking = function(id, done) {
-  var route = '/rail.svc/json/jStationParking?StationCode=F06&';
+  var route = '/rail.svc/json/jStationParking?StationCode='+id+'&';
   get(this.url(route), function(err, data) {
     if (err) return done(err);
-    return done(null, data);
+    if (!data.StationsParking) return done(new Error('no data'));
+    return done(null, data.StationsParking);
   });
 }
 
-// http://api.wmata.com/rail.svc/json/jStationTimes?StationCode=A10&api_key=n7ch87y8fapve2g8dukccnbv
+
 exports.getRailStationTimes = function(id, done) {
-  var route = '/rail.svc/json/jStationTimes?StationCode=A10&';
+  var route = '/rail.svc/json/jStationTimes?StationCode='+id+'&';
   get(this.url(route), function(err, data) {
     if (err) return done(err);
-    return done(null, data);
+    if (!data.StationTimes) return done(new Error('no data'));
+    return done(null, data.StationTimes);
   });
 }
 
-// http://api.wmata.com/rail.svc/json/JSrcStationToDstStationInfo?FromStationCode=A10&ToStationCode=B05&api_key=n7ch87y8fapve2g8dukccnbv
+
 exports.getRailStationToStationInfo = function(from, to, done) {
-  var route = '/rail.svc/json/JSrcStationToDstStationInfo?FromStationCode=A10&ToStationCode=B05&';
+  var route = '/rail.svc/json/JSrcStationToDstStationInfo?FromStationCode='+from+'&ToStationCode='+to+'&';
   get(this.url(route), function(err, data) {
     if (err) return done(err);
-    return done(null, data);
+    if (!data.StationToStationInfos) return done(new Error('no data'));
+    return done(null, data.StationToStationInfos);
   });
 }
 

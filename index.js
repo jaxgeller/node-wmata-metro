@@ -6,9 +6,16 @@ function Metro(apikey) {
   this.url = function(type) {
     return this.baseUrl + type + this.key;
   }
-  this.get = api.get;
-  this.getStationPrediction = api.getStationPrediction;
-  this.getClosestStations = api.getClosestStations;
+
+  this.getRailLines = api.getRailLines;
+  this.getRailStations = api.getRailStations;
+  this.getRailStationInfo = api.getRailStationInfo;
+  this.getRailPaths = api.getRailPaths;
+  this.getRailStationPrediction = api.getRailStationPrediction;
+  this.getRailStationEntrances = api.getRailStationEntrances;
+  this.getRailStationParking = api.getRailStationParking;
+  this.getRailStationTimes = api.getRailStationTimes;
+  this.getRailStationToStationInfo = api.getRailStationToStationInfo;
 }
 
 module.exports = Metro;
