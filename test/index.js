@@ -48,7 +48,7 @@ describe('Metro api', function() {
   });
 
   it('.getRailStationPrediction should', function(done) {
-    client.getRailStationPrediction('A10', function(err, res) {
+    client.getRailStationPrediction('A10', false, function(err, res) {
       if (err) return done(err);
       res.should.be.an.array;
       res[0].should.have.keys('Car', 'Destination', 'DestinationCode', 'DestinationName', 'Group', 'Line', 'LocationCode', 'LocationName', 'Min');
@@ -56,6 +56,16 @@ describe('Metro api', function() {
     });
   });
   
+  it('.getRailStationPrediction should', function(done) {
+    client.getRailStationPrediction('A10', true, function(err, res) {
+      if (err) return done(err);
+      res.should.be.an.object;
+      // res.A10[0].should.be.an.array;
+      // res.A10[0].should.have.keys('Car', 'Destination', 'DestinationCode', 'DestinationName', 'Group', 'Line', 'LocationCode', 'LocationName', 'Min');
+      return done();
+    });
+  });
+
   it('.getRailStationEntrances should', function(done) {
     client.getRailStationEntrances(coord1, 350, function(err, res) {
       if (err) return done(err);
