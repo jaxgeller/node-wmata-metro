@@ -1,6 +1,6 @@
 {
   "name": "wmata-metro-js",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Metro api for node.js",
   "keywords": ["wmata", "metro", "metro api", "metro js", "api for metro"],
   "main": "index.js",
