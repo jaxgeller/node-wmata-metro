@@ -100,4 +100,12 @@ describe('Metro api', function() {
     });
   });
 
+
+  it('.getClosestPrediction', function(done) {
+    client.getClosestPrediction(coord1, 500, 1, function(err, data) {
+      console.log(data);
+      if (err) return done();
+      return done();
+    })
+  })
 });

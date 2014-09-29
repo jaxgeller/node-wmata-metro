@@ -16,6 +16,7 @@ function Metro(apikey) {
   this.getRailStationParking = api.getRailStationParking;
   this.getRailStationTimes = api.getRailStationTimes;
   this.getRailStationToStationInfo = api.getRailStationToStationInfo;
+  this.getClosestPrediction = api.getClosestPrediction;
 }
 
 module.exports = Metro;

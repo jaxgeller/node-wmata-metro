@@ -1,4 +1,5 @@
 var helpers = require('./helpers');
+var async = require('async');
 
 /**
  * get all rail stations
@@ -134,5 +135,32 @@ exports.getRailStationToStationInfo = function(from, to, done) {
     if (err) return done(err);
     if (!data.StationToStationInfos) return done(new Error('no data'));
     return done(null, data.StationToStationInfos);
+  });
+}
+
+/**
+ * [getClosestPrediction description]
+ * @param  {[type]}   loc    [description]
+ * @param  {[type]}   radius [description]
+ * @param  {[type]}   limit  [description]
+ * @param  {Function} done   [description]
+ * @return {[type]}          [description]
+ */
+exports.getClosestPrediction = function(loc, radius, limit, done) {
+  var self = this;
+  self.getRailStationEntrances(loc, radius, function(err, res) {
+    if (err) return done(err);
+    else {
+      res.slice(0, limit);
+      async.map(res, function(stops, cb) {
+        self.getRailStationPrediction(stops.StationCode1, false, function(err, data) {
+          if (err) return cb(err);
+          else return cb(null, data);
+        });
+      }, function(e, r) {
+        if (e) return done(e);
+        else return done(null, r);
+      });
+    }
   });
 }
