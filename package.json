@@ -1,6 +1,6 @@
 {
   "name": "wmata-metro-js",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Metro api for node.js",
   "keywords": [
     "wmata",
@@ -12,8 +12,6 @@
   "main": "index.js",
   "dependencies": {
     "async": "^0.9.0",
-    "lodash": "^2.4.1",
-    "node-geo-distance": "^1.1.0",
     "request": "^2.44.0"
   },
   "devDependencies": {
@@ -27,6 +25,6 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jacksongeller/wmata-metro.js.git"
+    "url": "https://github.com/jacksongeller/node-wmata-metro.git"
   }
 }

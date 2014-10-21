@@ -1,6 +1,9 @@
-# wmata-metro.js
+# node-wmata-metro
 
 [![Build Status](https://travis-ci.org/jacksongeller/wmata-metro.js.svg)](https://travis-ci.org/jacksongeller/wmata-metro.js)
+
+## Looking for bus?
+Check out [this](https://github.com/jacksongeller/node-wmata-bus)
 
 ## Install
 `$ npm install wmata-metro-js --save`
