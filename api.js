@@ -1,6 +1,5 @@
 var request = require('request')
 var async = require('async');
-var geo = require('node-geo-distance');
 
 // Private functions
 
