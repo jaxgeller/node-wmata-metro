@@ -2,12 +2,12 @@
 
 [![Build Status](https://travis-ci.org/jacksongeller/wmata-metro.js.svg)](https://travis-ci.org/jacksongeller/wmata-metro.js)
 
-# Install
+## Install
 `$ npm install wmata-metro-js --save`
 
 
----
-# Get started
+
+## Get started
 
 1. Grab your metro API key
 2. Init the client
@@ -18,8 +18,8 @@ var Metro = require('metro');
 var client = new Metro('api key here');
 ```
 
----
-# Examples
+
+## Examples
 
 ```js
 
@@ -38,89 +38,142 @@ client.getRailStationToStationInfo('A10', 'C12', function(err, res) {
 });
 ```
 
----
-# API
 
-## getRailLines(callback)
+## API
 
-get all rail stations
+### getRailLines(done) 
 
-### Params: 
+Get all rail lines
 
-* **Function** *callback* - returns err, data
+**Parameters**
 
-## getRailStations(id, callback)
+**done**: `function`, callback(err, res)
 
-get a specific rail station
+**Returns**: `Array`, - list of lines with codes
 
-### Params: 
 
-* **String** *id* - station ID
-* **Function** *callback* - returns err, data
+### getRailStations(lineCode, done) 
 
-## getRailStationInfo(id, callback)
+For a given line, get all stations
 
-get a specific rail station's info
+**Parameters**
 
-### Params: 
+**lineCode**: `String`, the line code, ie: RD or SV
 
-* **String** *id* - station ID
-* **Function** *callback* - returns err, data
+**done**: `function`, callback(err, res)
 
-## getRailPaths(from, to, callback)
+**Returns**: `Array`, - list of stations for a given line
 
-gets a rail path from one station to another
 
-### Params: 
+### getRailStationInfo(stationCode, done) 
 
-* **String** *from* - station ID
-* **String** *to* - station ID
-* **Function** *callback* - returns err, data
+Get info for a station
 
-## getRailStationPrediction(id, sort, callback)
+**Parameters**
 
-gets a prediction for a specific station
+**stationCode**: `String`, a station code, ie: A10
 
-### Params: 
+**done**: `function`, callback(err, res)
 
-* **String** *id* - station ID
-* **Boolean** *sort* - bool for sorting the response into specific stations
-* **Function** *callback* - returns err, data
+**Returns**: `Object`, - object of properties corresponding to station
 
-## getRailStationEntrances(loc, radius, callback)
 
-gets the station entrances for a specific station
+### getRailPaths(fromStationCode, toStationCode, done) 
 
-### Params: 
+Get stations between two different stations
 
-* **Object** *loc* - `{lat: number, lon: number}`
-* **Number** *radius* - the radius of how far you want to collect Stations
-* **Function** *callback* - returns err, data
+**Parameters**
 
-## getRailStationParking(id, callback)
+**fromStationCode**: `String`, start station code, ie: A10
 
-gets stations parking for a specific station
+**toStationCode**: `String`, end station code, ie: C03
 
-### Params: 
+**done**: `function`, callback(err, res)
 
-* **String** *id* - station ID
-* **Function** *callback* - returns err, data
+**Returns**: `Array`, - list of stations between a start and end station
 
-## getRailStationTimes(id, callback)
 
-gets operating hours of a speficic station
+### getRailStationPrediction(stationCodes, done) 
 
-### Params: 
+Get prediction times for a station
 
-* **String** *id* - station ID
-* **Function** *callback* - returns err, data
+**Parameters**
 
-## getRailStationToStationInfo(from, to, callback)
+**stationCodes**: `String`, station code, ie: A10. Can also include a multiple stations separated by comma, ie:A10,A11,C02.
 
-gets info from one station to another
+**done**: `function`, callback(err, res)
 
-### Params: 
+**Returns**: `Array`, - list of train predictions
 
-* **String** *from* - station ID
-* **String** *to* - station ID
-* **Function** *callback* - returns err, data
+
+### getRailStationEntrances(loc, radius, done) 
+
+Get station entrance info via a location
+
+**Parameters**
+
+**loc**: `Object`, object of coordinates, ie: loc.lat, loc.lon
+
+**radius**: `Number`, radius of search location in meters
+
+**done**: `function`, callback(err, res)
+
+**Returns**: `Array`, - list of meta info on the stations that are near the loc
+
+
+### getRailStationParking(stationCode, done) 
+
+Get rail station parking info
+
+**Parameters**
+
+**stationCode**: `String`, station code, ie: A10
+
+**done**: `function`, callback(err, res)
+
+**Returns**: `Array`, - list of parking info on the station
+
+
+### getRailStationTimes(stationCode, done) 
+
+Get rail station time info
+
+**Parameters**
+
+**stationCode**: `String`, station code, ie: A10
+
+**done**: `function`, callback(err, res)
+
+**Returns**: `Array`, - list of time info on the station
+
+
+### getRailStationToStationInfo(fromStationCode, toStationCode, done) 
+
+Get rail station to station info
+
+**Parameters**
+
+**fromStationCode**: `String`, start station code, ie: A10
+
+**toStationCode**: `String`, end station code, ie: B05
+
+**done**: `function`, callback(err, res)
+
+**Returns**: `Array`, - list of station to station info on the stations
+
+
+### getClosestStationsPrediction(loc, radius, limit, done) 
+
+Get the closest stations and their predictions given a location
+
+**Parameters**
+
+**loc**: `Object`, the coordinates for a point to search, loc.lat, loc.lon
+
+**radius**: `Number`, the search radius in meters
+
+**limit**: `Number`, the number of of stations to return
+
+**done**: `function`, callback(err, res)
+
+**Returns**: `Array`, - list of stations closest to your coordinate and their predictions

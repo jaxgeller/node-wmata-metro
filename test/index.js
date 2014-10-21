@@ -1,111 +1,125 @@
 var should = require('chai').should();
 var Metro = require('../');
-var client = new Metro(process.env.PASSWORD);
+var client = new Metro(process.env.KEY);
 
-var coord1 = {
+var coordinates = {
   lat: 38.9059581,
   lon: -77.0416805
 }
+var radius = 350;
+var limit = 5;
 
-describe('Metro api', function() {
+describe('Base Metro api', function() {
 
-  it('.getRailLines', function(done) {
+  beforeEach(function(done) {
+    this.timeout(4000);
+    setTimeout(function() {
+      return done();
+    }, 1000);
+  });
+
+  it('#getRailLines', function(done) {
     client.getRailLines(function(err, res) {
       if (err) return done(err);
-      res.should.be.an.array;
-      res.length.should.be.above(3);
-      res[0].should.have.keys('DisplayName','EndStationCode', 'InternalDestination1', 'InternalDestination2', 'LineCode', 'StartStationCode');
+      res[0].should.have.keys('DisplayName', 'EndStationCode', 'InternalDestination1', 'InternalDestination2', 'LineCode', 'StartStationCode')
       return done();
     });
   });
 
-  it('.getRailStations', function(done) {
+  it('#getRailStations', function(done) {
     client.getRailStations('RD', function(err, res) {
       if (err) return done(err);
-      res.should.be.an.array;
-      res.length.should.be.above(3);
       res[0].should.have.keys('Address', 'Code', 'Lat', 'LineCode1', 'LineCode2', 'LineCode3', 'LineCode4', 'Lon', 'Name', 'StationTogether1', 'StationTogether2');
       return done();
     });
   }); 
 
-  it('.getRailStationInfo', function(done) {
+  it('#getRailStationInfo', function(done) {
     client.getRailStationInfo('A10', function(err, res) {
       if (err) return done(err);
-      res.should.be.an.object;
       res.should.have.keys('Address', 'Code', 'Lat', 'LineCode1', 'LineCode2', 'LineCode3', 'LineCode4', 'Lon', 'Name', 'StationTogether1', 'StationTogether2');
+      res.Name.should.be.eql('Medical Center');
       return done();
     });
   });
   
-  it('.getRailPaths', function(done) {
+  it('#getRailPaths', function(done) {
     client.getRailPaths('A10','A12', function(err, res) {
       if (err) return done(err);
-      res.should.be.an.array;
       res[0].should.have.keys('DistanceToPrev', 'LineCode', 'SeqNum', 'StationCode', 'StationName');
+      res[0].LineCode.should.eql('RD');
+      res[0].StationName.should.eql('Medical Center');
       return done();
     });
   });
 
-  it('.getRailStationPrediction', function(done) {
-    client.getRailStationPrediction('A10', false, function(err, res) {
+  it('#getRailStationPrediction', function(done) {
+    client.getRailStationPrediction('A10', function(err, res) {
       if (err) return done(err);
-      res.should.be.an.array;
       res[0].should.have.keys('Car', 'Destination', 'DestinationCode', 'DestinationName', 'Group', 'Line', 'LocationCode', 'LocationName', 'Min');
+      res[0].Line.should.eql('RD');
+      res[0].LocationName.should.eql('Medical Center');
       return done();
     });
   });
   
-  it('.getRailStationPrediction #sort', function(done) {
-    client.getRailStationPrediction('A10', true, function(err, res) {
+  it('#getRailStationEntrances', function(done) {
+    client.getRailStationEntrances(coordinates, radius, function(err, res) {
       if (err) return done(err);
-      res.A10[0].should.have.keys('Car', 'Destination', 'DestinationCode', 'DestinationName', 'Group', 'Line', 'LocationCode', 'LocationName', 'Min');
-      return done();
-    });
-  });
-
-  it('.getRailStationEntrances should', function(done) {
-    client.getRailStationEntrances(coord1, 350, function(err, res) {
-      if (err) return done(err);
-      res.should.be.an.array;
       res[0].should.have.keys('Description', 'ID', 'Lat', 'Lon', 'Name', 'StationCode1', 'StationCode2');
+      res[0].ID.should.eql('105');
       return done();
     });
   });
   
-  it('.getRailStationParking should', function(done) {
+  it('#getRailStationParking', function(done) {
     client.getRailStationParking('F06', function(err, res) {
       if (err) return done(err);
-      res.should.be.an.array;
       res[0].should.have.keys('Code', 'Notes', 'AllDayParking', 'ShortTermParking');
+      res[0].Code.should.eql('F06')
       return done();
     });
   });
   
-  it('.getRailStationTimes should', function(done) {
+  it('#getRailStationTimes', function(done) {
     client.getRailStationTimes('A10', function(err, res) {
       if (err) return done(err);
-      res.should.be.an.array;
       res[0].should.have.keys('Code', 'StationName', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');
+      res[0].Code.should.eql('A10');
       return done();
     });
   });
   
-  it('.getRailStationToStationInfo should', function(done) {
+  it('#getRailStationToStationInfo', function(done) {
     client.getRailStationToStationInfo('A10', 'B05', function(err, res) {
       if (err) return done(err);
-      res.should.be.an.array;
       res[0].should.have.keys('CompositeMiles', 'DestinationStation', 'RailFare', 'RailTime', 'SourceStation');
+      res[0].SourceStation.should.eql('A10');
       return done();
     });
   });
 
+});
 
-  it('.getClosestPrediction', function(done) {
-    client.getClosestPrediction(coord1, 500, 1, function(err, data) {
-      console.log(data);
-      if (err) return done();
+
+
+describe('Extended Metro API', function() {
+  beforeEach(function(done) {
+    this.timeout(4000);
+    setTimeout(function() {
       return done();
-    })
-  })
+    }, 1000);
+  });
+
+  it('#getClosestStationsPrediction', function(done) {
+    this.timeout(8000);
+    client.getClosestStationsPrediction(coordinates, radius, limit, function(err, res) {
+      if (err) return done(err);
+      else (res) {
+        res[0].should.have.keys('Car', 'Destination', 'DestinationCode', 'DestinationName', 'Group', 'Line', 'LocationCode', 'LocationName', 'Min');
+        return done();
+      } 
+    });
+  });
+
 });
