@@ -115,7 +115,7 @@ describe('Extended Metro API', function() {
     this.timeout(8000);
     client.getClosestStationsPrediction(coordinates, radius, limit, function(err, res) {
       if (err) return done(err);
-      else (res) {
+      if (res) {
         res[0].should.have.keys('Car', 'Destination', 'DestinationCode', 'DestinationName', 'Group', 'Line', 'LocationCode', 'LocationName', 'Min');
         return done();
       } 
