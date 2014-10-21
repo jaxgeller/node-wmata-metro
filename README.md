@@ -1,6 +1,6 @@
 # node-wmata-metro
 
-[![Build Status](https://travis-ci.org/jacksongeller/wmata-metro.js.svg)](https://travis-ci.org/jacksongeller/wmata-metro.js)
+[![Build Status](https://travis-ci.org/jacksongeller/node-wmata-metro.svg?branch=master)](https://travis-ci.org/jacksongeller/node-wmata-metro)
 
 ## Looking for bus?
 Check out [this](https://github.com/jacksongeller/node-wmata-bus)
