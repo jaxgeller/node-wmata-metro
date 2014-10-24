@@ -6,7 +6,7 @@
 Check out [this](https://github.com/jacksongeller/node-wmata-bus)
 
 ## Install
-`$ npm install wmata-metro-js --save`
+`$ npm install node-wmata-metro --save`
 
 
 
